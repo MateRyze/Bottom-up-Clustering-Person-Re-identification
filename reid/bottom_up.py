@@ -41,7 +41,7 @@ class Bottom_up():
         self.batch_size = batch_size
         self.data_height = 256
         self.data_width = 128
-        self.data_workers = 6
+        self.data_workers = 0
 
         self.initial_steps = initial_steps
         self.step_size = step_size
@@ -54,10 +54,10 @@ class Bottom_up():
         if self.is_video:
             self.eval_bs = 1
             self.fixed_layer = True
-            self.frames_per_video = 16
+            self.frames_per_video = 8
             self.later_steps = 5
         else:
-            self.eval_bs = 64
+            self.eval_bs = 16
             self.fixed_layer = False
             self.frames_per_video = 1
             self.later_steps = 2
@@ -147,6 +147,7 @@ class Bottom_up():
         self.criterion.weight = torch.from_numpy(weight).cuda()
 
     def evaluate(self, query, gallery):
+        print(query)
         test_loader = self.get_dataloader(list(set(query) | set(gallery)), training=False)
         evaluator = Evaluator(self.model)
         rank1, mAP = evaluator.evaluate(test_loader, query, gallery)

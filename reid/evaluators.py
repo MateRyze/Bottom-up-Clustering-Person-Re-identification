@@ -22,7 +22,9 @@ def extract_features(model, data_loader, print_freq=1, metric=None):
     fcs = OrderedDict()
 
     print("Begin to extract features...")
+    print(data_loader)
     for i, (imgs, fnames, pids, _, _) in enumerate(data_loader):
+        print(i, type(imgs))
         _fcs, pool5s = extract_cnn_feature(model, imgs)
         for fname, fc, pool5, pid in zip(fnames, _fcs, pool5s, pids):
             features[fname] = pool5

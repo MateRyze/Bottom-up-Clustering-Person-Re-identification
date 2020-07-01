@@ -5,6 +5,7 @@ from .mars import Mars
 from .dukemtmc_videoReID import DukeMTMC_VideoReID
 from .market1501 import Market1501
 from .duke import *
+from .custom import Custom
 
 
 __factory = {
@@ -12,6 +13,7 @@ __factory = {
     'DukeMTMC-VideoReID': DukeMTMC_VideoReID,
     'market1501': Market1501,
     'duke': Duke,
+    'custom': Custom
 
 }
 

@@ -8,13 +8,15 @@ import os, sys, time
 from reid.utils.logging import Logger
 import os.path as osp
 from torch.backends import cudnn
+import warnings
 
 def main(args):
+    warnings.filterwarnings("ignore")
     cudnn.benchmark = True
     cudnn.enabled = True
     
     save_path = args.logs_dir
-    sys.stdout = Logger(osp.join(args.logs_dir, 'log'+ str(args.merge_percent)+ time.strftime(".%m_%d_%H:%M:%S") + '.txt'))
+    sys.stdout = Logger(osp.join(args.logs_dir, 'log'+ str(args.merge_percent)+ time.strftime(".%m_%d_%H%M%S") + '.txt'))
 
     # get all unlabeled data for training
     dataset_all = datasets.create(args.dataset, osp.join(args.data_dir, args.dataset))
@@ -32,10 +34,10 @@ def main(args):
 
     for step in range(int(1/args.merge_percent)-1):
         print('step: ',step)
+        if __name__ == '__main__':
+            BuMain.train(new_train_data, step, loss=args.loss)
 
-        BuMain.train(new_train_data, step, loss=args.loss) 
-
-        BuMain.evaluate(dataset_all.query, dataset_all.gallery)
+            BuMain.evaluate(dataset_all.query, dataset_all.gallery)
 
         # get new train data for the next iteration
         print('----------------------------------------bottom-up clustering------------------------------------------------')
@@ -46,7 +48,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='bottom-up clustering')
-    parser.add_argument('-d', '--dataset', type=str, default='mars',
+    parser.add_argument('-d', '--dataset', type=str, default='custom',
                         choices=datasets.names())
     parser.add_argument('-b', '--batch-size', type=int, default=16)  
     parser.add_argument('-f', '--fea', type=int, default=2048)

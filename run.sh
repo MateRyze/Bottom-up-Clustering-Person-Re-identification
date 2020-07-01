@@ -1,4 +1,4 @@
-dataset=market1501
+dataset=custom
 #dataset=duke
 #dataset=mars
 #dataset=DukeMTMC-VideoReID
@@ -12,3 +12,4 @@ logs=logs/$dataset
 
 python run.py --dataset $dataset --logs_dir $logs \
               -b $batchSize --size_penalty $size_penalty -mp $merge_percent 
+$SHELL
